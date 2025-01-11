@@ -5,23 +5,14 @@ const socketIO = require('socket.io');
 
 const port = process.env.PORT || 8080;
 const env = process.env.NODE_ENV || 'development';
-const cors = require('cors');
 
 // Redirect to https
-
 app.get('*', (req, res, next) => {
     if (req.headers['x-forwarded-proto'] !== 'https' && env !== 'development') {
         return res.redirect(['https://', req.get('Host'), req.url].join(''));
     }
     next();
 });
-app.get('/', (req, res) => {
-    res.send('Server is running successfully!');
-});
-
-
-app.use(cors()); // Enable CORS for all routes
-
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules')));
